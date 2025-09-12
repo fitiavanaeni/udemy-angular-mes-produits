@@ -2,21 +2,35 @@
   <div class="card shadow mb-4">
     <div class="card-body">
       <table class="table table-striped">
-        <tr>
-          <th>Id</th>
-          <th>Nom</th>
-          <th>Prix</th>
-          <th>Date Création</th>
-        </tr>
-        @for (produit of produits; track produit.idProduit) {
+        @if(produits.length!=0){
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Date Création</th>
+          </tr>
+        </thead>
+        } @for (produit of produits; track produit.idProduit; let index =
+        $index; let nbr=$count; let first=$first ; let last=$last) {
         <tbody>
           <tr>
+            <td>{{ index + 1 }}</td>
             <td>{{ produit.idProduit }}</td>
             <td>{{ produit.nomProduit }}</td>
             <td>{{ produit.prixProduit }}</td>
             <td>{{ produit.dateCreation | date : "dd/MM/yyyy" }}</td>
+            <td>
+              <a class="btn btn-danger" (click)="supprimerProduit(produit)"
+                >Supprimer</a
+              >
+            </td>
           </tr>
         </tbody>
+        @if (last) {
+        <h1>Nombre : {{ nbr }}</h1>
+        } } @empty {
+        <h1>Aucun produit trouvé !</h1>
         }
       </table>
     </div>
