@@ -24,6 +24,7 @@ export class ProduitsComponent implements OnInit {
 
   supprimerProduit(prod: Produit) {
     // console.log(prod);
-    this.produitService.supprimerProduit(prod);
+    let conf = confirm('Etes-vous sûr ?');
+    if (conf) this.produitService.supprimerProduit(prod);
   }
 }
