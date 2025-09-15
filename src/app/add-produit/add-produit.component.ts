@@ -19,7 +19,6 @@ export class AddProduitComponent implements OnInit {
 
   addProduit() {
     //console.log(this.newProduit);
-
     this.produitService.ajouterProduit(this.newProduit);
     this.message =
       'Produit  ' + this.newProduit.nomProduit + ' ajouté avec Succès';

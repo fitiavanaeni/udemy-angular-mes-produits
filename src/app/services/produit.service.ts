@@ -42,9 +42,7 @@ export class ProduitService {
     if (index > -1) {
       this.produits.splice(index, 1);
     }
-
     //ou Bien
-
     /*
     this.produits.forEach((cur, index) => {
       if (prod.idProduit === cur.idProduit) {
@@ -52,5 +50,16 @@ export class ProduitService {
       }
     });
     */
+  }
+  consulterProduit(id: number): Produit {
+    return this.produits.find((p) => p.idProduit == id)!;
+  }
+
+  updateProduit(prod: Produit) {
+    const index = this.produits.indexOf(prod, 0);
+    if (index > -1) {
+      this.produits.splice(index, 1);
+      this.produits.splice(index, 0, prod);
+    }
   }
 }
