@@ -13,23 +13,25 @@ import { Router } from '@angular/router';
 })
 export class AddProduitComponent implements OnInit {
   newProduit = new Produit();
+
   categories!: Categorie[];
   newIdCat!: number;
   newCategorie!: Categorie;
-  // message!: string;
-
-  constructor(private produitService: ProduitService, private router: Router) {}
+  
+ 
+  constructor(private produitService: ProduitService, private router: Router) { }
 
   ngOnInit() {
-    this.categories = this.produitService.listeCategories();
+    this.produitService.listeCategories().subscribe(cats => {
+      this.categories= cats;
+    });
   }
 
   addProduit() {
-    //console.log(this.newProduit);
-    this.newCategorie = this.produitService.consulterCategorie(this.newIdCat);
-    this.newProduit.categorie = this.newCategorie;
-    this.produitService.ajouterProduit(this.newProduit);
-    this.router.navigate(['produits']);
-    // this.message = 'Produit  ' + this.newProduit.nomProduit + ' ajouté avec Succès';
+    this.newProduit.categorie = this.categories.find(cat => cat.idCat == this.newIdCat)!;
+    this.produitService.ajouterProduit(this.newProduit).subscribe((prod) => {
+      console.log(prod);
+      this.router.navigate(['produits']);
+    })
   }
 }
