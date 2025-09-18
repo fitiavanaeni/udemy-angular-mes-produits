@@ -26,7 +26,7 @@ export class UpdateProduitComponent implements OnInit {
 
   ngOnInit(): void {
     this.produitService.listeCategories().subscribe((cats) => {
-      this.categories = cats;
+      this.categories = cats._embedded.categories;
       console.log(cats);
     });
     this.produitService

@@ -4,6 +4,7 @@ import { Categorie } from '../model/categorie.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { CategorieWrapped } from '../model/categorieWrapped.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -39,7 +40,7 @@ export class ProduitService {
     return this.http.put<Produit>(environment.apiURL, prod, httpOptions);
   }
 
-  listeCategories(): Observable<Categorie[]> {
-    return this.http.get<Categorie[]>(environment.apiURL + '/cat');
+  listeCategories(): Observable<CategorieWrapped> {
+    return this.http.get<CategorieWrapped>(environment.apiURLCat);
   }
 }
