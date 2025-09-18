@@ -3,49 +3,43 @@ import { Produit } from '../model/produit.model';
 import { Categorie } from '../model/categorie.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProduitService {
-  produits !: Produit[];
+  produits!: Produit[];
 
-
-  apiUrl: string = 'http://localhost:8080/produits/api';
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   listeProduit(): Observable<Produit[]> {
-    return this.http.get<Produit[]>(this.apiUrl);
+    return this.http.get<Produit[]>(environment.apiURL);
   }
-
 
   ajouterProduit(prod: Produit): Observable<Produit> {
-    return this.http.post<Produit>(this.apiUrl, prod, httpOptions);
+    return this.http.post<Produit>(environment.apiURL, prod, httpOptions);
   }
-
 
   supprimerProduit(id: number) {
-    const url = `${this.apiUrl}/${id}`
-    return this.http.delete(url, httpOptions)
+    const url = `${environment.apiURL}/${id}`;
+    return this.http.delete(url, httpOptions);
   }
 
-
   consulterProduit(id: number): Observable<Produit> {
-    const url = `${this.apiUrl}/${id}`
+    const url = `${environment.apiURL}/${id}`;
     return this.http.get<Produit>(url);
   }
 
   updateProduit(prod: Produit): Observable<Produit> {
-    return this.http.put<Produit>(this.apiUrl, prod, httpOptions);
+    return this.http.put<Produit>(environment.apiURL, prod, httpOptions);
   }
 
-  listeCategories():Observable<Categorie[]>{
-    return this.http.get<Categorie[]>(this.apiUrl+'/cat')
+  listeCategories(): Observable<Categorie[]> {
+    return this.http.get<Categorie[]>(environment.apiURL + '/cat');
   }
 }

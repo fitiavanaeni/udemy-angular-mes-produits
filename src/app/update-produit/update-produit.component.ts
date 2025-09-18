@@ -22,23 +22,24 @@ export class UpdateProduitComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private produitService: ProduitService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-
-    this.produitService.consulterProduit(
-      this.activatedRoute.snapshot.params['id']
-    ).subscribe((prod) => {
-      this.currentProduit = prod;
+    this.produitService.listeCategories().subscribe((cats) => {
+      this.categories = cats;
+      console.log(cats);
     });
-
+    this.produitService
+      .consulterProduit(this.activatedRoute.snapshot.params['id'])
+      .subscribe((prod) => {
+        this.currentProduit = prod;
+        this.updatedCatId = this.currentProduit.categorie.idCat;
+      });
   }
   updateProduit() {
-
-    // this.currentProduit.categorie = this.produitService.consulterCategorie(this.updatedCatId)
+     this.currentProduit.categorie = this.categories.find(cats=> cats.idCat == this.updatedCatId)!;
     this.produitService.updateProduit(this.currentProduit).subscribe((prod) => {
       this.router.navigate(['produits']);
     });
-
   }
 }
