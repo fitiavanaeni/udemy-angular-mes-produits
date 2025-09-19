@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Produit } from '../model/produit.model';
-import { Categorie } from '../model/categorie.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { CategorieWrapped } from '../model/categorieWrapped.model';
+import { environment } from '../../environments/environment.development';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -16,7 +16,7 @@ const httpOptions = {
 export class ProduitService {
   produits!: Produit[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   listeProduit(): Observable<Produit[]> {
     return this.http.get<Produit[]>(environment.apiURL);
@@ -42,5 +42,9 @@ export class ProduitService {
 
   listeCategories(): Observable<CategorieWrapped> {
     return this.http.get<CategorieWrapped>(environment.apiURLCat);
+  }
+  rechercherParCategorie(idCat: number): Observable<Produit[]> {
+    const url = `${environment.apiURL}/prodscat/${idCat}`;
+    return this.http.get<Produit[]>(url);
   }
 }
