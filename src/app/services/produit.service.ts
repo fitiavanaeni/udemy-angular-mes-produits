@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CategorieWrapped } from '../model/categorieWrapped.model';
 import { environment } from '../../environments/environment.development';
+import { Categorie } from '../model/categorie.model';
 
 
 const httpOptions = {
@@ -51,5 +52,9 @@ export class ProduitService {
   rechercherParNom(nom: string): Observable<Produit[]> {
     const url = `${environment.apiURL}/prodsByName/${nom}`;
     return this.http.get<Produit[]>(url);
+  }
+
+  ajouterCategorie(cat : Categorie): Observable<Categorie>{
+    return this.http.post<Categorie>(environment.apiURLCat, cat, httpOptions );
   }
 }
