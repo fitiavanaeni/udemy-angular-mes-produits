@@ -14,15 +14,18 @@ export class UpdateCategorieComponent implements OnInit {
   @Input()
   categorie !: Categorie;
 
+  @Input()
+  ajout!: boolean;
+
   @Output()
   categorieUpdated = new EventEmitter<Categorie>();
 
   ngOnInit(): void {
-    console.log("ngOnInit du composant UpdateCategorie ", this.categorie);
+    // console.log("ngOnInit du composant UpdateCategorie ", this.categorie);
 
   }
 
-  saveCategorie(){
+  saveCategorie() {
     this.categorieUpdated.emit(this.categorie);
   }
 }

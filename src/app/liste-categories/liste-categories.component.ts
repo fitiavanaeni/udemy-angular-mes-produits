@@ -11,8 +11,10 @@ import { UpdateCategorieComponent } from '../update-categorie/update-categorie.c
   styles: ``
 })
 export class ListeCategoriesComponent {
+
   categories!: Categorie[];
-  updatedCat: Categorie = { "idCat": 0, "nomCat": "" };
+  updatedCat: Categorie = { "idCat": null, "nomCat": "" };
+  ajout: boolean = true;
 
   constructor(private produitService: ProduitService) { }
 
@@ -32,5 +34,10 @@ export class ListeCategoriesComponent {
       console.log("Categorie est bien reçu", cat);
     })
 
+  }
+
+  updateCat(cat: Categorie) {
+    this.updatedCat = cat;
+    this.ajout = false;
   }
 }

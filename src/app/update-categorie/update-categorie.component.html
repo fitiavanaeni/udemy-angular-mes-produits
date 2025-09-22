@@ -1,7 +1,8 @@
 <form>
-    <div>
+    <div [hidden]="ajout">
         <label>ID Catégorie</label>
-        <input type="text" [(ngModel)]="categorie.idCat" name="idCategorie" class="form-control w-25">
+        <input type="text" [readOnly]="!ajout" [(ngModel)]="categorie.idCat" name="idCategorie"
+            class="form-control w-25">
     </div>
     <div>
         <label>Nom Catégorie</label>
@@ -9,7 +10,8 @@
             placeholder="Entrez un nom de catégorie...">
     </div>
     <div class="mt-2">
-        <button type="submit" [disabled]="!categorie.nomCat" class="btn btn-success" (click)="saveCategorie()">Ajouter
+        <button type="submit" [disabled]="!categorie.nomCat" class="btn btn-success" (click)="saveCategorie()"> {{ ajout
+            ? 'Ajouter' : 'Modifier'}}
         </button>
     </div>
 </form>
