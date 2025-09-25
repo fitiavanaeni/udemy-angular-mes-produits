@@ -29,4 +29,10 @@ export class AuthService {
     });
     return validUser;
   }
+
+  isAdmin(): Boolean {
+    if (!this.roles) //this.roles== undefiened 
+      return false;
+    return (this.roles.indexOf('ADMIN') > -1);
+  }
 }
