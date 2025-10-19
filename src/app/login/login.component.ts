@@ -9,20 +9,35 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styles: ``
+  styles: ``,
 })
 export class LoginComponent {
-
   user = new User();
-  erreur: boolean = false;
+  //erreur: boolean = false;
+  err: number = 0;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  onLoggedin() {
+  /* onLoggedin() {
     console.log(this.user);
     let isValidUser: Boolean = this.authService.SignIn(this.user);
     if (isValidUser)
       this.router.navigate(['/']);
     else this.erreur = true;
+  }
+
+  */
+
+  onLoggedin() {
+    this.authService.login(this.user).subscribe({
+      next: (data) => {
+        let jwToken = data.headers.get('Authorization')!;
+        this.authService.saveToken(jwToken);
+        this.router.navigate(['/']);
+      },
+      error: (err: any) => {
+        this.err = 1;
+      },
+    });
   }
 }
