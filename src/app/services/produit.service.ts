@@ -20,58 +20,30 @@ export class ProduitService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   listeProduit(): Observable<Produit[]> {
-    // return this.http.get<Produit[]>(environment.apiURL);
-
-    let jwt = this.authService.getToken();
-    jwt = 'Bearer ' + jwt;
-    let httpHeaders = new HttpHeaders({ Authorization: jwt });
-
-    return this.http.get<Produit[]>(environment.apiURL + '/all', {
-      headers: httpHeaders,
-    });
+    return this.http.get<Produit[]>(environment.apiURL + '/all');
   }
 
   ajouterProduit(prod: Produit): Observable<Produit> {
-    let jwt = this.authService.getToken();
-    jwt = 'Bearer ' + jwt;
-    let httpHeaders = new HttpHeaders({ Authorization: jwt });
-    return this.http.post<Produit>(environment.apiURL + "/addprod", prod, {
-      headers: httpHeaders,
-    });
+    return this.http.post<Produit>(environment.apiURL + '/addprod', prod);
   }
 
   supprimerProduit(id: number) {
     const url = `${environment.apiURL}/delprod/${id}`;
-    let jwt = this.authService.getToken();
-    jwt = 'Bearer ' + jwt;
-    let httpHeaders = new HttpHeaders({ Authorization: jwt });
-    return this.http.delete(url, { headers: httpHeaders });
+    return this.http.delete(url);
   }
 
   consulterProduit(id: number): Observable<Produit> {
     const url = `${environment.apiURL}/getbyid/${id}`;
-    let jwt = this.authService.getToken();
-    jwt = 'Bearer ' + jwt;
-    let httpHeaders = new HttpHeaders({ Authorization: jwt });
-    return this.http.get<Produit>(url, { headers: httpHeaders });
+
+    return this.http.get<Produit>(url);
   }
 
   updateProduit(prod: Produit): Observable<Produit> {
-    let jwt = this.authService.getToken();
-    jwt = 'Bearer ' + jwt;
-    let httpHeaders = new HttpHeaders({ Authorization: jwt });
-    return this.http.put<Produit>(environment.apiURL+"/updateprod", prod, {
-      headers: httpHeaders,
-    });
+    return this.http.put<Produit>(environment.apiURL + '/updateprod', prod);
   }
 
   listeCategories(): Observable<CategorieWrapped> {
-    let jwt = this.authService.getToken();
-    jwt = 'Bearer ' + jwt;
-    let httpHeaders = new HttpHeaders({ Authorization: jwt });
-    return this.http.get<CategorieWrapped>(environment.apiURLCat, {
-      headers: httpHeaders,
-    });
+    return this.http.get<CategorieWrapped>(environment.apiURLCat);
   }
   rechercherParCategorie(idCat: number): Observable<Produit[]> {
     const url = `${environment.apiURL}/prodscat/${idCat}`;
