@@ -8,6 +8,7 @@ import { ListeCategoriesComponent } from './liste-categories/liste-categories.co
 import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { produitGuard } from './produit.guard';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
   { path: 'produits', component: ProduitsComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'rechercheParNom', component: RechercheParNomComponent },
   { path: 'listeCategories', component: ListeCategoriesComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'app-forbidden', component: ForbiddenComponent },
   { path: '', redirectTo: 'produits', pathMatch: 'full' },
 ];
