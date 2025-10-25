@@ -7,7 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { User } from '../model/user.model';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +21,15 @@ export class RegisterComponent implements OnInit {
   public user = new User();
   confirmPassword?: string;
   myForm!: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  err: any;
+  loading: boolean = false;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
@@ -30,6 +40,20 @@ export class RegisterComponent implements OnInit {
     });
   }
   onRegister() {
-    console.log(this.user);
+    this.loading = true;
+    this.authService.registerUser(this.user).subscribe({
+      next: (res) => {
+        this.authService.setRegistredUser(this.user);
+        this.loading = false;
+
+        this.toastr.success('veillez confirmer votre email', 'Confirmation');
+        this.router.navigate(['/verifEmail']);
+      },
+      error: (err: any) => {
+        if (err.error.errorCode === 'USER_EMAIL_ALREADY_EXISTS') {
+          this.err = 'Email existe déjà';
+        }
+      },
+    });
   }
 }

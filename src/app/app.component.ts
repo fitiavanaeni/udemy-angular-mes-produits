@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
 
     if (isloggedin != 'true' || !loggedUser) this.router.navigate(['/login']);
     else this.authService.setLoggedUserFromLocalStorage(loggedUser); */
-
     this.authService.loadToken();
     if (
       this.authService.getToken() == null ||
