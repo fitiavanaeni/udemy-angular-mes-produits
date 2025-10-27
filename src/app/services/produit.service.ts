@@ -6,6 +6,7 @@ import { CategorieWrapped } from '../model/categorieWrapped.model';
 import { environment } from '../../environments/environment.development';
 import { Categorie } from '../model/categorie.model';
 import { AuthService } from './auth.service';
+import { Image } from '../model/image.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -57,5 +58,40 @@ export class ProduitService {
 
   ajouterCategorie(cat: Categorie): Observable<Categorie> {
     return this.http.post<Categorie>(environment.apiURLCat, cat, httpOptions);
+  }
+
+  uploadImage(file: File, filename: string): Observable<Image> {
+    const imageFormData = new FormData();
+    imageFormData.append('image', file, filename);
+    const url = `${environment.apiURL + '/image/upload'}`;
+    return this.http.post<Image>(url, imageFormData);
+  }
+
+  loadImage(id: number): Observable<Image> {
+    const url = `${environment.apiURL + '/image/get/info'}/${id}`;
+    return this.http.get<Image>(url);
+  }
+
+  uploadImageProd(
+    file: File,
+    filename: string,
+    idProd: number
+  ): Observable<any> {
+    const imageFormData = new FormData();
+    imageFormData.append('image', file, filename);
+    const url = `${environment.apiURL + '/image/uplaodImageProd'}/${idProd}`;
+    return this.http.post(url, imageFormData);
+  }
+
+  supprimerImage(id: number) {
+    const url = `${environment.apiURL}/image/delete/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
+
+  uploadImageFS(file: File, filename: string, idProd: number): Observable<any> {
+    const imageFormData = new FormData();
+    imageFormData.append('image', file, filename);
+    const url = `${environment.apiURL + '/image/uploadFS'}/${idProd}`;
+    return this.http.post(url, imageFormData);
   }
 }

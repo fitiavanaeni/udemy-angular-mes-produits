@@ -10,6 +10,7 @@
             <th>Nom</th>
             <th>Prix</th>
             <th>Date Création</th>
+            <th>Image</th>
           </tr>
         </thead>
         } @for (produit of produits; track produit.idProduit; let index =
@@ -22,7 +23,13 @@
             <td>{{ produit.prixProduit }}</td>
             <td>{{ produit.dateCreation | date : "dd/MM/yyyy" }}</td>
             <td>{{ produit.categorie.nomCat }}</td>
-
+            <td>
+              <img
+                class="card-img-top img-responsive"
+               src="{{apiurl+'/image/loadfromFS/'+produit.idProduit}}"
+                style="height: 50px; width: 100px"
+              />
+            </td>
             @if(authService.isAdmin()){
             <td>
               <a class="btn btn-danger" (click)="supprimerProduit(produit)"

@@ -19,16 +19,6 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  /* onLoggedin() {
-    console.log(this.user);
-    let isValidUser: Boolean = this.authService.SignIn(this.user);
-    if (isValidUser)
-      this.router.navigate(['/']);
-    else this.erreur = true;
-  }
-
-  */
-
   onLoggedin() {
     this.authService.login(this.user).subscribe({
       next: (data) => {
